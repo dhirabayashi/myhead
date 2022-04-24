@@ -1,18 +1,18 @@
 import click
-import sys
+
+from myhead.printer import print_file, print_stdin
 
 
 @click.command()
 @click.argument('file', required=False)
-def cmd(file):
+@click.option('-n', default=10)
+def cmd(file, n):
+    """headコマンドクローン"""
+    __print_lines(file, n)
+
+
+def __print_lines(file, n):
     if file:
-        with open(file) as f:
-            for line in f:
-                print(line)
+        print_file(file, n)
     else:
-        while line := sys.stdin.readline():
-            print(line, end='')
-
-
-if __name__ == '__main__':
-    cmd()
+        print_stdin(n)
