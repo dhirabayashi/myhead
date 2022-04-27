@@ -1,9 +1,9 @@
+import tempfile
 import textwrap
 import unittest
-import tempfile
-from test.support import captured_stdout
+from unittest.mock import Mock
 
-from myhead.printer import print_file
+from myhead.printer import print_file, print_stdin
 
 
 class PrinterTest(unittest.TestCase):
@@ -20,11 +20,28 @@ class PrinterTest(unittest.TestCase):
             fp.write(text.encode('utf-8'))
             fp.flush()
 
-            with captured_stdout() as stdout:
-                # 実行
-                print_file(fp.name, 2)
+            # モック
+            stdout_mock = Mock()
+
+            # 実行
+            print_file(fp.name, 2, stdout_mock)
 
             # 検証
-            expected = 'aaa\nbbb\n'
-            actual = stdout.getvalue()
-            self.assertEqual(expected, actual)
+            self.assertEqual(2, stdout_mock.write.call_count)
+            stdout_mock.write.assert_any_call('aaa\n')
+            stdout_mock.write.assert_any_call('bbb\n')
+            stdout_mock.flush.assert_called_once()
+
+    def test_print_stdin(self):
+        # モック
+        stdin_mock = Mock()
+        stdin_mock.readline.return_value = 'aaa\n'
+        stdout_mock = Mock()
+
+        # 実行
+        print_stdin(2, stdin_mock, stdout_mock)
+
+        # 検証
+        self.assertEqual(2, stdout_mock.write.call_count)
+        stdout_mock.write.assert_any_call('aaa\n')
+        stdout_mock.write.assert_any_call('aaa\n')

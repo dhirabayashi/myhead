@@ -1,4 +1,5 @@
 import click
+import sys
 
 from myhead.printer import print_file, print_stdin
 
@@ -13,6 +14,6 @@ def cmd(file, n):
 
 def __print_lines(file, n):
     if file:
-        print_file(file, n)
+        print_file(file, n, sys.stdout)
     else:
-        print_stdin(n)
+        print_stdin(n, sys.stdin, sys.stdout)
