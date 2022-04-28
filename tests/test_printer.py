@@ -24,7 +24,7 @@ class PrinterTest(unittest.TestCase):
             stdout_mock = Mock()
 
             # 実行
-            print_file(fp.name, 2, stdout_mock)
+            print_file(fp.name, 2, False, stdout_mock)
 
             # 検証
             self.assertEqual(2, stdout_mock.write.call_count)

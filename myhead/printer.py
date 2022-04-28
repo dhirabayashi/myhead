@@ -1,14 +1,15 @@
-import sys
-
-
-def print_file(file, n, out):
+def print_file(file, n, show_header, out):
     """ファイルの内容を指定行数のみ出力する
 
     :param file: 対象のファイルパス
     :param n: 行数
+    :param show_header: ファイル名を表示するかどうか
     :param out: 出力先
     :return: None
     """
+    if show_header:
+        out.write(f'==> {file} <==\n')
+
     try:
         count = 0
         # ファイル入力

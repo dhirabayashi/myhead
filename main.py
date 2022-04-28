@@ -1,5 +1,5 @@
-from myhead.core import cmd
+from myhead import core
 
 
 if __name__ == '__main__':
-    cmd()
+    core.cmd()
