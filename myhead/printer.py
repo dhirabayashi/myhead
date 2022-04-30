@@ -1,3 +1,7 @@
+import os.path
+import sys
+
+
 def print_file_lines(file, line_count, show_header, out):
     """ファイルの内容を指定行数のみ出力する
 
@@ -7,6 +11,11 @@ def print_file_lines(file, line_count, show_header, out):
     :param out: 出力先
     :return: None
     """
+
+    # ファイルのチェック
+    if msg := __generate_error_message(file):
+        print(f'myhead: {msg}', file=sys.stderr)
+        return 1
 
     # ファイル名の出力
     if show_header:
@@ -25,6 +34,8 @@ def print_file_lines(file, line_count, show_header, out):
             out.write(line)
             current_count += 1
 
+    return 0
+
 
 def print_file_bytes(file, byte_count, show_header, out):
     """ファイルの内容を指定バイト数のみ出力する
@@ -35,6 +46,11 @@ def print_file_bytes(file, byte_count, show_header, out):
     :param out: 出力先
     :return: None
     """
+
+    # ファイルのチェック
+    if msg := __generate_error_message(file):
+        print(f'myhead: {msg}', file=sys.stderr)
+        return 1
 
     # ファイル名の出力
     if show_header:
@@ -60,6 +76,8 @@ def print_file_bytes(file, byte_count, show_header, out):
 
             if remaining_byte_count <= 0:
                 break
+
+    return 0
 
 
 def print_stdin_lines(line_count, stdin, out):
@@ -95,3 +113,16 @@ def print_stdin_bytes(byte_count, stdin, out):
     # バイト数分切り取って表示
     output = inputs.encode()[:byte_count].decode(errors='replace')
     out.write(output)
+
+
+def __generate_error_message(filename):
+    if not os.path.exists(filename):
+        return f'{filename}: No such file or directory'
+
+    if os.path.isdir(filename):
+        return f'Error reading {filename}'
+
+    if not os.access(filename, os.R_OK):
+        return f'{filename}: Permission denied'
+
+    return None

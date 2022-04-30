@@ -24,10 +24,11 @@ class PrinterTest(unittest.TestCase):
             stdout_mock = Mock()
 
             # 実行
-            printer.print_file_lines(fp.name, 2, False, stdout_mock)
+            printer.print_file_lines(fp.name, 2, True, stdout_mock)
 
             # 検証
-            self.assertEqual(2, stdout_mock.write.call_count)
+            self.assertEqual(3, stdout_mock.write.call_count)
+            stdout_mock.write.assert_any_call(f'==> {fp.name} <==\n')
             stdout_mock.write.assert_any_call('aaa\n')
             stdout_mock.write.assert_any_call('bbb\n')
 
@@ -48,10 +49,11 @@ class PrinterTest(unittest.TestCase):
             stdout_mock = Mock()
 
             # 実行
-            printer.print_file_bytes(fp.name, 5, False, stdout_mock)
+            printer.print_file_bytes(fp.name, 5, True, stdout_mock)
 
             # 検証
-            self.assertEqual(2, stdout_mock.write.call_count)
+            self.assertEqual(3, stdout_mock.write.call_count)
+            stdout_mock.write.assert_any_call(f'==> {fp.name} <==\n')
             stdout_mock.write.assert_any_call('aaa\n')
             stdout_mock.write.assert_any_call('b')
 
