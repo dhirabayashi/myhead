@@ -1,6 +1,6 @@
 # myhead
 ## Overview
-head command clone
+A clone of head command
 
 ## Requirement
 * Python 3
