@@ -13,7 +13,7 @@ def print_file_lines(file, line_count, show_header, out):
     """
 
     # ファイルのチェック
-    if msg := __generate_error_message(file):
+    if msg := __check_file(file):
         print(f'myhead: {msg}', file=sys.stderr)
         return 1
 
@@ -48,7 +48,7 @@ def print_file_bytes(file, byte_count, show_header, out):
     """
 
     # ファイルのチェック
-    if msg := __generate_error_message(file):
+    if msg := __check_file(file):
         print(f'myhead: {msg}', file=sys.stderr)
         return 1
 
@@ -115,7 +115,13 @@ def print_stdin_bytes(byte_count, stdin, out):
     out.write(output)
 
 
-def __generate_error_message(filename):
+def __check_file(filename):
+    """
+    指定されたファイル名が読み取り可能かどうか調べる
+    :param filename: チェック対象のファイル名（パス）
+    :return: 問題がある場合はエラーメッセージ、問題がなければNone
+    """
+
     if not os.path.exists(filename):
         return f'{filename}: No such file or directory'
 
