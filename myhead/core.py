@@ -11,10 +11,7 @@ from myhead import printer
 @click.argument('files', nargs=-1, required=False)
 def cmd(files, line_count, byte_count):
     """
-    headコマンドクローンのエントリポイント
-    :param files: ファイル名
-    :param line_count: 表示行数
-    :param byte_count: 表示バイト数
+    headコマンドクローン
     """
 
     # バリデーション
