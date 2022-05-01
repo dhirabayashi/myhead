@@ -11,7 +11,7 @@ from myhead import printer
 @click.argument('files', nargs=-1, required=False)
 def cmd(files, line_count, byte_count):
     """
-    headコマンドクローン
+    A clone of head command
     """
 
     # バリデーション
